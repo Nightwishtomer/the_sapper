@@ -1,0 +1,16 @@
+#MainWin {
+
+}
+
+#myCanvas {
+    border: 2px solid rgb(255, 0, 0);
+}
+
+#menu {
+    width: 100px;
+    height: 50px;
+    border: 2px solid rgb(0, 255, 0);
+}
+#game-info {
+    color:blueviolet;
+}

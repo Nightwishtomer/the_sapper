@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<style type="text/css"></style>
+		<title>Sapper JavaScript</title>
+		<link href="./style.css" rel="stylesheet" type="text/css">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="./index.js" ></script>
+	</head>
+	<body>
+		<div id="MainWin">
+    		<canvas id="myCanvas" width="200" height="200"></canvas>
+
+			<div id="game-menu">
+				<div>
+					<b id="game-info"></b><br />
+					Difficulty: <b id="menu-difficulty">Beginner</b><br />
+					Remaining mines: <b id="menu-mines">0</b><br />
+					Steps: <b id="menu-steps">0</b><br />
+					<p>
+						<b>Field size:</b><br />
+						<label for="cellY">Vertical:</label><input type="number" disabled id="cellY" value="9" min="8" max="100"/><br />
+						<label for="cellX">Horizontally:</label><input type="number" disabled id="cellX" value="9" min="8" max="100" /><br />
+						<label for="mines">Mines:</label><input type="number" disabled id="mines" value="10" min="10" max="100" />
+						<input type="type" disabled id="type" value="beginner" style="display:none;" />
+					</p>
+				</div><br />
+				<input type="button" value="Oldfag" id="button-oldfag" onclick="selectDifficulty('oldfag');" /><label for="button-oldfag">(8 x 8)</label><br />
+				<input type="button" value="Beginner" id="button-beginner" onclick="selectDifficulty('beginner');" disabled /><label for="button-beginner">(9 x 9)</label><br />
+				<input type="button" value="Amateur" id="button-amateur" onclick="selectDifficulty('amateur');" /><label for="button-amateur">(16 x 16)</label><br />
+				<input type="button" value="Professional" id="button-professional" onclick="selectDifficulty('professional');" /><label for="button-professional">(16 x 30)</label><br />
+				<input type="button" value="Custom" id="button-custom" onclick="selectDifficulty('custom');" /><br />
+				<br /><br />
+				<input type="button" value="START" id="start" onclick="start();" />
+				<div style="display:none;">
+					<img id="source_1" src="img/1.png" width="25" height="25" />
+					<img id="source_2" src="img/2.png" width="25" height="25" />
+					<img id="source_3" src="img/3.png" width="25" height="25" />
+					<img id="source_4" src="img/4.png" width="25" height="25" />
+					<img id="source_5" src="img/5.png" width="25" height="25" />
+					<img id="source_6" src="img/6.png" width="25" height="25" />
+					<img id="source_7" src="img/7.png" width="25" height="25" />
+					<img id="source_8" src="img/8.png" width="25" height="25" />
+					<img id="source_cell" src="img/cell.png" />
+					<img id="source_cell_active" src="img/cell_active.png" width="25" height="25" />
+					<img id="source_flag" src="img/flag.png" width="25" height="25" />
+					<img id="source_mine" src="img/mine.png" width="25" height="25" />
+					<img id="source_mine_active" src="img/mine_active.png" width="25" height="25" />				
+				</div>
+			</div>
+		</div>
+		<script>
+			// function for changing the game difficulty level			
+			function selectDifficulty(type) {
+				let menuDifficultyHTML = document.getElementById("menu-difficulty"); // Displaying the difficulty level of the game
+				let menuMinesHTML = document.getElementById("menu-mines"); // Displaying the number of minutes remaining
+				let menuCellY = document.getElementById("cellY"); // Displaying the number of lines
+				let menuCellX = document.getElementById("cellX"); // Displaying the number of columns
+				let menuMines = document.getElementById("mines"); // Displaying the number of mines
+				let menutype = document.getElementById("type"); // Displaying the difficulty level of the game
+				let menuButtonOldfag = document.getElementById("button-oldfag"); // Button
+				let menuButtonBeginner = document.getElementById("button-beginner"); // Button
+				let menuButtonAmateur = document.getElementById("button-amateur"); // Button
+				let menuButtonProfessional = document.getElementById("button-professional"); // Button
+				let menuButtonCustom = document.getElementById("button-custom"); // Button
+				let difficulty = "Beginner"; 
+				menuCellY.disabled = true; // Hide elements
+				menuCellX.disabled = true; // Hide elements
+				menuMines.disabled = true; // Hide elements
+				menuButtonOldfag.disabled = false; // Hide elements
+				menuButtonBeginner.disabled = false; // Hide elements
+				menuButtonAmateur.disabled = false; // Hide elements
+				menuButtonProfessional.disabled = false; // Hide elements
+				menuButtonCustom.disabled = false; // Hide elements
+				if (type == "oldfag") {
+					difficulty = "Oldfag";
+					menuCellY.value = 8; // Recording the number of lines
+					menuCellX.value = 8; // Recording the number of columns
+					menuMines.value = 8; // Recording the number of mines
+					menuButtonOldfag.disabled = true;
+				}
+				if (type == "beginner") {
+					difficulty = "Beginner";
+					menuCellY.value = 9; // Recording the number of lines
+					menuCellX.value = 9; // Recording the number of columns
+					menuMines.value = 10; // Recording the number of mines
+					menuButtonBeginner.disabled = true;
+				}
+				if (type == "amateur") {
+					difficulty = "Amateur";
+					menuCellY.value = 16; // Recording the number of lines
+					menuCellX.value = 16; // Recording the number of columns
+					menuMines.value = 40; // Recording the number of mines
+					menuButtonAmateur.disabled = true;
+				}
+				if (type == "professional") {
+					difficulty = "Professional";
+					menuCellY.value = 16; // Recording the number of lines
+					menuCellX.value = 30; // Recording the number of columns
+					menuMines.value = 99; // Recording the number of mines
+					menuButtonProfessional.disabled = true;
+				}
+				if (type == "custom") {
+					difficulty = "Кастом";
+					menuCellY.value = 8; // Recording the number of lines
+					menuCellX.value = 8; // Recording the number of columns
+					menuMines.value = 10; // Recording the number of mines
+					menuButtonCustom.disabled = true;       
+					menuCellY.disabled = false;
+					menuCellX.disabled = false;
+					menuMines.disabled = false;
+				} 
+				menuDifficultyHTML.innerHTML = difficulty; // Game Difficulty Recording
+				menuMinesHTML.innerHTML = menuMines.value; // Recording the number of mines remaining
+				menutype.value = type; // Game type entry
+			};
+
+			function start() {
+				let menuCellY = document.getElementById("cellY").value;
+				let menuCellX = document.getElementById("cellX").value;
+				let menuMines = document.getElementById("mines").value;
+				let menutype = document.getElementById("type").value;
+				document.getElementById("game-info").innerHTML = "";
+				let games = new Game(); // initialize the game
+				games.start_game(menuCellY, menuCellX, menuMines, menutype); // Let's start the game
+			}
+		</script>
+	</body>
+</html>
